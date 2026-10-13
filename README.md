@@ -15,8 +15,3 @@ data/raw/            original datasets (RICE.csv and NASA downloads)
 data/processed/      weekly NASA data and the merged dataset
 src/merge_data.py    code that merges the two datasets
 ```
-How to run
-```
-pip install -r requirements.txt
-python src/merge_data.py
-```
