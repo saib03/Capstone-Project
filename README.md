@@ -11,7 +11,8 @@ The NASA data was combined with the rice data to add an independent weather sour
 same locations and to cross-check the station readings.
 Repository structure
 
-RICE.csv                          original Kaggle dataset (unchanged)
 nasa_daily/                       NASA POWER daily downloads, one file per location
+RICE.csv                          original Kaggle dataset (unchanged)
 nasa_weekly_all_locations.csv     NASA data aggregated to weekly values
 RICE_merged.csv                   rice data combined with the weekly NASA weather
+merge_data.py                     code that merges the two datasets
