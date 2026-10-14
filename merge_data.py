@@ -1,5 +1,11 @@
 import pandas as pd
 
+import pandas as pd
+df = pd.read_csv("RICE.csv")
+print(df.shape)
+print("Rows:", df.shape[0])
+print("Columns:", df.shape[1])
+
 LOCATIONS = ["Cuttack", "Ludhiana", "Maruteru", "Palampur", "Raipur", "Rajendranagar"]
 
 
@@ -37,7 +43,7 @@ def main():
 
     print("Rows in RICE.csv:", len(rice))
     print("Rows in merged file:", len(merged))
-    print("Rows with no NASA data:", merged["NASA_MaxT"].isna().sum())
+    print("Rows with no NASA data (missing value ):", merged["NASA_MaxT"].isna().sum())
 
 
 main()
