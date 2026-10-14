@@ -1,13 +1,10 @@
-import io
 import pandas as pd
 
 LOCATIONS = ["Cuttack", "Ludhiana", "Maruteru", "Palampur", "Raipur", "Rajendranagar"]
 
 
 def load_nasa_file(location):
-    with open("nasa_daily/" + location + ".csv") as f:
-        text = f.read().split("-END HEADER-")[1]
-    df = pd.read_csv(io.StringIO(text))
+    df = pd.read_csv("nasa_daily/" + location + ".csv", skiprows=13)
     df = df.replace(-999, float("nan"))
     df["Location"] = location
     df["Standard Week"] = ((df["DOY"] - 1) // 7 + 1).clip(upper=52)
