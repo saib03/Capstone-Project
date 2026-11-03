@@ -3,7 +3,6 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-import plotly.graph_objects as go
 
 OUT_DIR = 'output_visualizations'
 os.makedirs(OUT_DIR, exist_ok=True)
@@ -145,7 +144,7 @@ def plot_seasonal_trends(insects, top_n=5):
     save_figure('4_seasonal_trends.png')
 
 
-# ------------------------------------------------- 5. Weather vs pest (optional)
+# ------------------------------------------------- 5. Weather vs pest
 def plot_weather_vs_pests(insects, top_n=3):
     insects = insects.assign(MeanTemp=(insects['MaxT'] + insects['MinT']) / 2,
                              LogCount=np.log10(1 + insects['Pest Value']))
@@ -170,53 +169,6 @@ def plot_weather_vs_pests(insects, top_n=3):
     save_figure('5_weather_vs_pests.png')
 
 
-# ------------------------------------------------------ 6. Interactive map (optional)
-def make_pest_map(insects):
-    stats = (insects.groupby(['Location', 'Species'])['Pest Value']
-             .agg(Mean='mean', Total='sum')
-             .join(insects.groupby(['Location', 'Species'])['Observation Year'].nunique()
-                   .rename('Years')).reset_index())
-    stats = stats[stats['Location'].isin(STATION_COORDS)]
-    stats['Lat'] = stats['Location'].map(lambda s: STATION_COORDS[s][0])
-    stats['Lon'] = stats['Location'].map(lambda s: STATION_COORDS[s][1])
-    species_order = list(insects.groupby('Species')['Pest Value'].sum()
-                         .sort_values(ascending=False).index)
-
-    fig = go.Figure()
-    for i, species in enumerate(species_order):
-        sub = stats[stats['Species'] == species]
-        fig.add_trace(go.Scattergeo(
-            lon=sub['Lon'], lat=sub['Lat'], name=species, visible=(i == 0),
-            customdata=sub[['Location', 'Species', 'Mean', 'Total', 'Years']].values,
-            hovertemplate=('<b>%{customdata[0]}</b><br>Species: %{customdata[1]}<br>'
-                           'Mean weekly count: %{customdata[2]:,.0f}<br>'
-                           'Total count: %{customdata[3]:,.0f}<br>'
-                           'Years observed: %{customdata[4]}<extra></extra>'),
-            marker=dict(size=12 + 45 * np.sqrt(sub['Mean'] / sub['Mean'].max()),
-                        color=sub['Mean'], colorscale='YlOrRd',
-                        colorbar=dict(title='Mean weekly<br>count'),
-                        line=dict(width=1, color='black'), opacity=0.85)))
-
-    # station names (always visible)
-    names = pd.Series(STATION_COORDS)
-    fig.add_trace(go.Scattergeo(
-        lon=[v[1] for v in names], lat=[v[0] for v in names], text=list(names.index),
-        mode='text', textposition='top center', hoverinfo='skip', showlegend=False))
-
-    buttons = []
-    for i, species in enumerate(species_order):
-        visible = [j == i for j in range(len(species_order))] + [True]
-        buttons.append(dict(label=species, method='update', args=[{'visible': visible}]))
-    fig.update_layout(
-        title='Rice Pest Activity by Research Station (select a species; bubble size and '
-              'colour = mean weekly light-trap count)',
-        updatemenus=[dict(buttons=buttons, x=0.01, y=0.99, xanchor='left', yanchor='top')],
-        margin=dict(l=0, r=0, t=60, b=0), height=650)
-    fig.update_geos(scope='asia', lonaxis_range=[68, 92], lataxis_range=[8, 35],
-                    showcountries=True, countrycolor='grey', showland=True,
-                    landcolor='whitesmoke', showocean=True, oceancolor='aliceblue')
-    fig.write_html(os.path.join(OUT_DIR, '6_pest_map.html'), include_plotlyjs=True)
-
 
 def main():
     insects = load_insect_data()
@@ -225,7 +177,6 @@ def main():
     plot_stacked_distribution(insects)
     plot_seasonal_trends(insects)
     plot_weather_vs_pests(insects)
-    make_pest_map(insects)
     print('Saved all visualizations in', OUT_DIR)
 
 
