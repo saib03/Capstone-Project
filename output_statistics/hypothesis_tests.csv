@@ -1,0 +1,16 @@
+Species,Question,Test,Statistic,p_value,Result
+Brown planthopper,Stations: equal variances,Levene,13.618734512486782,8.620070711097531e-09,significant
+Brown planthopper,Stations: differ in mean count,One-way ANOVA,351.27349450802177,1.7082035682496536e-181,significant
+Brown planthopper,Stations: differ in count,Kruskal-Wallis,650.9288035631151,9.161755927565104e-141,significant
+Brown planthopper,High vs low humidity,Welch t-test,13.780299366163103,3.006048082299712e-41,significant
+Brown planthopper,High > low humidity,Mann-Whitney U,605154.5,1.0365482267342596e-38,significant
+Green leafhopper,Stations: equal variances,Levene,44.06849150926544,1.1145850820726094e-35,significant
+Green leafhopper,Stations: differ in mean count,One-way ANOVA,235.1273290141027,3.2534262016281474e-169,significant
+Green leafhopper,Stations: differ in count,Kruskal-Wallis,686.8863562015495,2.4079113355857264e-147,significant
+Green leafhopper,High vs low humidity,Welch t-test,19.094350317747086,1.5757603149751066e-75,significant
+Green leafhopper,High > low humidity,Mann-Whitney U,933090.0,1.1988408377979875e-73,significant
+Yellow stem borer,Stations: equal variances,Levene,64.83162275928281,4.111267764702751e-53,significant
+Yellow stem borer,Stations: differ in mean count,One-way ANOVA,324.42369610587286,1.8365689496649523e-240,significant
+Yellow stem borer,Stations: differ in count,Kruskal-Wallis,893.276966323494,4.767588600228335e-192,significant
+Yellow stem borer,High vs low humidity,Welch t-test,14.75304489202852,6.130615559852949e-48,significant
+Yellow stem borer,High > low humidity,Mann-Whitney U,2302383.5,8.990306404546294e-50,significant
